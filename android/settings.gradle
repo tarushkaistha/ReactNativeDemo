@@ -1,4 +1,23 @@
+dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+    versionCatalogs {
+        create("moengage") {
+            from("com.moengage:android-dependency-catalog:4.2.1")
+        }
+    }
+}
+
 rootProject.name = 'AndroidReactNativeProject'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+
+include ':react-native-moengage'
+project(':react-native-moengage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-moengage/android')
+
+include ':react-native-moengage-inbox'
+project(':react-native-moengage-inbox').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-moengage-inbox/android')

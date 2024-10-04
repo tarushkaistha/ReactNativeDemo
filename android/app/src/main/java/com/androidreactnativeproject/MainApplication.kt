@@ -44,9 +44,10 @@ class MainApplication : Application(), ReactApplication {
                 com.moengage.core.config.LogConfig(
                     com.moengage.core.LogLevel.VERBOSE, true
                 )
-            ).configureNotificationMetaData(
+            )
+            .configureNotificationMetaData(
                 NotificationConfig(
-                    R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_background
+                    R.drawable.ic_launcher, R.drawable.ic_launcher_background
                 )
             )
         MoEInitializer.initializeDefaultInstance(applicationContext, moEngage)

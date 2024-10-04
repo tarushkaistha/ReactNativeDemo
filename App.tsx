@@ -20,70 +20,9 @@ import { CardsData } from "react-native-moengage-cards";
 import MoEReactInbox, {MoEInboxData} from 'react-native-moengage-inbox';
 import { MoEngageLogger } from "react-native-moengage";
 import { MoEProperties, MoEAppStatus, MoEInitConfig, MoEPushConfig, MoEngageLogConfig, MoEngageLogLevel } from "react-native-moengage";
-// const moEInitConfig = new MoEInitConfig(
-//   MoEPushConfig.defaultConfig(),
-//   new MoEngageLogConfig(MoEngageLogLevel.VERBOSE, true)
-// );
-
-// useEffect(() => {
-//     ReactMoE.initialize("Z1UDNSWJALFR3UTPWWMCSF5Z", moEInitConfig);
-// }, []);
-// ReactMoE.initialize("Z1UDNSWJALFR3UTPWWMCSF5Z", moEInitConfig);
-// ReactMoE.requestPushPermissionAndroid();
 
 
 function App(): React.JSX.Element {
-
-  ReactMoE.setEventListener('pushTokenGenerated', payload => {
-    console.log('pushTokenGenerated', payload);
-  });
-
-  ReactMoE.setEventListener("pushClicked", (notificationPayload) => {
-    console.log("pushClicked", notificationPayload);
-  });
-
-//     ReactMoE.setEventListener("inAppCampaignShown", (inAppInfo) =>
-//         console.log("inAppCampaignShown", inAppInfo)
-//     );
-//
-//     ReactMoE.setEventListener("inAppCampaignClicked", (inAppInfo) =>
-//         console.log("inAppCampaignClicked", inAppInfo)
-//     );
-//
-//
-//     ReactMoE.setEventListener("inAppCampaignDismissed", (inAppInfo) =>
-//         console.log("inAppCampaignDismissed", inAppInfo)
-//     );
-
-    ReactMoE.setEventListener("inAppCampaignSelfHandled", (selfHandledPayload) => {
-       if (selfHandledPayload && Object.keys(selfHandledPayload).length != 0) {
-         console.log("inAppCampaignSelfHandled", selfHandledPayload);
-
-
-
-//                 handleNonPrimaryActionTap = () => {
-//                   ReactMoE.selfHandledClicked(selfHandledPayload);
-//                 };
-
-       }
-
-                        trackSelfHandledInAppClick = () => {
-                         ReactMoE.selfHandledClicked(selfHandledPayload);
-                       };
-
-
-                       trackSelfHandledInAppShown = () => {
-                         ReactMoE.selfHandledShown(selfHandledPayload);
-                       };
-
-
-    });
-
-
-// handleNonPrimaryActionTap = () => {
-//
-//          ReactMoE.selfHandledClicked(this.info);
-//        };
 
     const [state, setState] = useState(0)
 
@@ -92,7 +31,6 @@ function App(): React.JSX.Element {
              MoEngageLogger.debug(`cards is fetched`);
              setState(cardsData)
     }, [])
-
 
 
         const fetchUnClickedCardsCount = useCallback(async()=> {
@@ -111,73 +49,19 @@ function App(): React.JSX.Element {
         new MoEngageLogConfig(MoEngageLogLevel.VERBOSE, true)
       );
 
-      /**
-       * Initialize the MoEngage Core SDK whenever the component is mounted properly.
-       *
-       * Notes:
-       *  1. If you have class based component then do consider initializing the MoEngage SDK in the render() or componentDidMount() function of class component.
-       *  2. You can also initialize the MoEngage SDK without moEInitConfig i.e. `ReactMoE.initialize(APP_ID)`;
-       */
 
       ReactMoE.initialize(APP_ID, moEInitConfig);
       ReactMoE.requestPushPermissionAndroid();
-//       MoEReactInbox.initialize(APP_ID);
-
        ReactMoEngageCards.initialize(APP_ID);
 
        ReactMoEngageCards.cardDelivered();
-        ReactMoE.getSelfHandledInApp();
 
-//         fetchCardsData()
-
-    },[/* fetchCardsData */ /* fetchCardsCount */ fetchUnClickedCardsCount]);
-
-
-//     const fetchData = async () => {
-//         var data: MoEInboxData  = await MoEReactInbox.fetchAllMessages()
-//         console.log(data.messages)
-// //         setDataSource(data.messages)
-//         return data
-//     }
-
-
-//      const fetchCardsData = useCallback(async()=> {
-//          const cardsData = await ReactMoEngageCards.fetchCards();
-//          MoEngageLogger.debug(`cards is fetched`);
-//          setState(cardsData)
-//      }, [])
-
-//      async fetchCards(): Promise<CardsData> {
-//         const cardsData = await ReactMoEngageCards.fetchCards();
-//         MoEngageLogger.debug(`cards is fetched`);
-//         return cardsData;
-//     }
+    },[]);
 
 
 
 return (
 <SafeAreaView style={styles.container}>
-    <View>
-      <Text style={styles.title}>
-        React Native Demo App
-      </Text>
-      <Button
-        title="Click to fetch inbox messages"
-        onPress={() =>  Alert.alert('Simple Button pressed')   }
-      />
-    </View>
-
-
-    <View>
-          <Text style={styles.title}>
-            Self Handled In App Show in React Native
-          </Text>
-          <Button
-            title="Click to see if SH shown is tracked "
-            onPress={() => trackSelfHandledInAppShown()  }
-          />
-
-        </View>
 
              <View>
              <Text style={styles.title}>
@@ -185,12 +69,10 @@ return (
              </Text>
 
              <Button
-               title="Click to Fetch Self Handled un clicked Cards count"
-               onPress={() => /* trackSelfHandledInAppClick() */ fetchUnClickedCardsCount()  }
+               title="Click to Fetch Self Handled cards data"
+               onPress={() => fetchCardsData()  }
              />
            </View>
-
-
 
 </SafeAreaView>
   );

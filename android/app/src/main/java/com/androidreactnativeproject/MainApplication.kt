@@ -34,12 +34,15 @@ class MainApplication : Application(), ReactApplication {
     override val reactHost: ReactHost
         get() = getDefaultReactHost(applicationContext, reactNativeHost)
 
+
     override fun onCreate() {
         super.onCreate()
 
 
         SoLoader.init(this, false)
-        val moEngage = MoEngage.Builder(this, "Z1UDNSWJALFR3UTPWWMCSF5Z", DataCenter.DATA_CENTER_1)
+
+
+        val moEngage = MoEngage.Builder(this, "XXXXXXXXXXXXXXXXXX", DataCenter.DATA_CENTER_1)
             .configureLogs(
                 com.moengage.core.config.LogConfig(
                     com.moengage.core.LogLevel.VERBOSE, true
@@ -53,11 +56,10 @@ class MainApplication : Application(), ReactApplication {
         MoEInitializer.initializeDefaultInstance(applicationContext, moEngage)
 
 
-
-
         if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
             // If you opted-in for the New Architecture, we load the native entry point for this app.
             load()
         }
     }
+
 }
